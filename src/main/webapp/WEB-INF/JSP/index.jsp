@@ -10,17 +10,17 @@
 <title>Insert title here</title>
 <%@include file="header_menu.jsp"%>
 
-<link rel="stylesheet" href="css/board.css">
-<link rel="stylesheet" href="css/index_home.css">
+<link rel="stylesheet" href="/css/board.css">
+<link rel="stylesheet" href="/css/index_home.css">
 </head>
 <body>
 	<div class="imgslides">
 		<div id="slides">
-			<img src="img/slide-1.jpg" />
-			<img src="img/slide-2.jpg" />
-			<img src="img/slide-3.jpg" />
-			<img src="img/slide-4.jpg" />
-			<img src="img/slide-5.png" />
+			<img src="/img/slide-1.jpg" />
+			<img src="/img/slide-2.jpg" />
+			<img src="/img/slide-3.jpg" />
+			<img src="/img/slide-4.jpg" />
+			<img src="/img/slide-5.png" />
 		</div>
 	</div>
 
@@ -107,8 +107,8 @@
 	</div>
 
 	<!-- slide Plugin -->
-	<script src="js/jquery.slides.min.js"></script>
-	<script src="js/img_slider.js"></script>
+	<script src="/js/jquery.slides.min.js"></script>
+	<script src="/js/img_slider.js"></script>
 
 </body>
 <%@include file="footer.jsp"%>
