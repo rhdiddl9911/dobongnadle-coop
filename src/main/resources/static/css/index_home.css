@@ -1,0 +1,73 @@
+/** 슬라이더 영역을 기본적으로 숨긴다. 플러그인에서 재구성하게 된다. 
+	이미지 슬라이더  */
+#slides {
+	display: none;
+	padding: 0 1em;
+	margin: 0 auto;
+	margin-top: 3em;
+	width: 55em;
+}
+
+#slides img{
+	border-radius: 1em;
+}
+
+/** 페이지번호(현재위치) 버튼 영역 */
+.slidesjs-pagination {
+	margin: 6px 0 0;
+	float: right;
+	list-style: none;
+}
+
+/** 페이지번호(현재위치) 버튼의 각 항목 */
+.slidesjs-pagination li {
+	float: left;
+	margin: 0 1px;
+}
+
+/** 페이지번호(현재위치) 버튼의 링크 */
+.slidesjs-pagination li a {
+	display: block;
+	width: 13px;
+	height: 0;
+	padding-top: 13px;
+	background-image: url(../img/pagination.png);
+	background-position: 0 0;
+	float: left;
+	overflow: hidden;
+}
+
+/** 페이지번호(현재위치) 버튼의 링크에 대한 마우스 클릭 상태 */
+.slidesjs-pagination li a.active, .slidesjs-pagination li a:hover.active {
+	background-position: 0 -13px;
+}
+
+/** 페이지번호(현재위치) 버튼의 링크에 대한 마우스 오버 */
+.slidesjs-pagination li a:hover {
+	background-position: 0 -26px;
+}
+
+/** 페이지번호(현재위치) 버튼의 링크 중, 방문했던 링크의 처리 */
+#slides a:link, #slides a:visited {
+	color: #333;
+}
+
+#slides a:hover, #slides a:active {
+	color: #d957a1;
+}
+
+/* 게시글 */
+.boardcontent{
+	clear:both;
+	display: inline-flex;
+	padding: 1em;
+}
+
+.flexwrap:first-child{
+	margin-right: 2em;
+}
+
+.flexwrap{
+	margin: 0;
+	margin-bottom: 2em;
+}
