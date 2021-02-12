@@ -2,9 +2,11 @@ package com.dobongnadlecoop.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dobongnadlecoop.dto.BoardDataDTO;
 import com.dobongnadlecoop.service.NoticeBoardService;
 
 import lombok.RequiredArgsConstructor;
@@ -21,8 +23,19 @@ public class NoticeBoardController {
 		return "redirect:/notice";
 	}
 	
+	
 	@GetMapping("")
 	public ModelAndView Home() {
+		ModelAndView model = new ModelAndView("noticeboard/list");
+		
+		model.addObject("noticeBoardList", service.getTitleList());
+		
+		return model;
+	}
+	
+	@PostMapping("")
+	public ModelAndView insertNoticeBoard(BoardDataDTO data) {
+		service.insertNoticeData(data);
 		ModelAndView model = new ModelAndView("noticeboard/list");
 		
 		model.addObject("noticeBoardList", service.getTitleList());
