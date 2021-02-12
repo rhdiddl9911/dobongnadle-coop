@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="/css/main.css">
 
 <header>
 <div class="wrap">
 	<div class="inner">
 	<div class="logo">
-	<a href="/"><img src="img/logo.jpg">
+	<a href="/"><img src="/img/logo.jpg">
 	<strong>도봉 나들가게 협동 조합</strong></a>
 	</div>
 	
@@ -44,8 +44,8 @@
 </div>
 </header>
 
-<script src="js/jquery-3.5.1.js"></script>
-<script src="js/scroll_menu_event.js"></script>
+<script src="/js/jquery-3.5.1.js"></script>
+<script src="/js/scroll_menu_event.js"></script>
 
 <div class="wrap main">
 	<div class="inner">
