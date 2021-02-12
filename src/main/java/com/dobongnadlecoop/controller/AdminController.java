@@ -19,5 +19,11 @@ public class AdminController {
 	public String ridect() {
 		return "redirect:/admin";
 	}
+
+	@GetMapping("/notice")
+	public ModelAndView insertNotice() {
+		ModelAndView model = new ModelAndView("admin/noticeinsert");
+		return model;
+	}
 	
 }

@@ -11,7 +11,7 @@
 
 <h1> 어드민 테스트 페이지 ^^ </h1>
 
-
+<button onclick="location.href='/admin/notice'">공지 입력하러가기</button>
 </body>
 <%@include file="../footer.jsp" %>
 </html>
