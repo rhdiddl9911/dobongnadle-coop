@@ -9,13 +9,22 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString
+@Getter
+@Builder
 @Entity
 public class NoticeBoard {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int num;
+	private int seq;
 	
 	@Column(nullable = false)
 	private String title;
@@ -30,5 +39,12 @@ public class NoticeBoard {
 		
 	@Column(insertable = false)
 	private Date updatedate;	// 마지막 글 수정 시각
-	
+
+	@Builder
+	public NoticeBoard(int seq, String title, String content, Date updatedate) {
+		this.seq = seq;
+		this.title = title;
+		this.content = content;
+		this.updatedate = updatedate;
+	}
 }
