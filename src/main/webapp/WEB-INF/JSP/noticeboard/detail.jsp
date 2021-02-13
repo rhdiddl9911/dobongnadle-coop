@@ -18,8 +18,13 @@
 		<button>수정</button>
 		<button>삭제</button>
 	</sec:authorize>
-	
-	<button onclick="/notice">목록</button>
+	<c:if test="${param.page == null}">
+		<c:set var="page" value=""/>
+	</c:if>
+	<c:if test="${param.page != null}">
+		<c:set var="page" value="page=${param.page}"/>
+	</c:if>
+	<button onclick="location.href='/notice?${page}'">목록</button>
 	
 </body>
 <%@include file="../footer.jspf" %>
