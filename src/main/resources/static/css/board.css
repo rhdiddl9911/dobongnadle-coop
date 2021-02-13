@@ -51,3 +51,9 @@
 .board #nulldata{
 	text-align: center;
 }
+
+/* 마우스 올렸을떄 동작 */
+.boarditem:hover{
+	background: #eee;
+	cursor: pointer;
+}
