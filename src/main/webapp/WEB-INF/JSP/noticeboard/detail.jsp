@@ -10,13 +10,16 @@
 <body>
 	<h1>글 상세보기</h1>
 	
-	<h2>${BoardData.getTitle()}</h2>
+	<h2>${BoardData.title}</h2>
 	
-	<p>${BoardData.getContent()}</p>
+	<p>${BoardData.content}</p>
 	
 	<sec:authorize access="hasRole('ADMIN')">
-		<button>수정</button>
-		<button>삭제</button>
+
+		<button onclick="location.href='/admin/notice/${BoardData.seq}'">수정</button>
+	<form action="/notice/${BoardData.seq}">
+		<button type="submit" formmethod="delete">삭제</button>
+	</form>
 	</sec:authorize>
 	<c:if test="${param.page == null}">
 		<c:set var="page" value=""/>

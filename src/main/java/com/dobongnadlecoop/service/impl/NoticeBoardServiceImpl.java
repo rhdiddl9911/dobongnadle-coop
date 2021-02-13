@@ -1,5 +1,6 @@
 package com.dobongnadlecoop.service.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -56,6 +57,17 @@ public class NoticeBoardServiceImpl implements NoticeBoardService{
 		}else {
 			return ModelMapperUtil.convertDataType(findresult.get(), BoardDataDTO.class);
 		}
+	}
+	
+	@Override
+	public void deleteBoardData(int seq) {
+		repo.deleteById(seq);
+	}
+	
+	@Override
+	public void updateBoardData(BoardDataDTO data) {
+		data.setUpdatedate(new Date());
+		repo.save(ModelMapperUtil.convertDataType(data, NoticeBoard.class));
 	}
 	
 }

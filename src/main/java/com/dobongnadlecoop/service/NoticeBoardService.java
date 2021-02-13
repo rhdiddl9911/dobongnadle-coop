@@ -22,5 +22,11 @@ public interface NoticeBoardService {
 	
 	// id로 글상세 가져오기
 	public BoardDataDTO getBoardData(int seq);
+	
+	// id로 글삭제
+	public void deleteBoardData(int seq);
+	
+	// 글 업데이트
+	public void updateBoardData(BoardDataDTO data);
 
 }

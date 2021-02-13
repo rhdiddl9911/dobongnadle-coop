@@ -10,7 +10,8 @@
 </head>
 <body>
 
-<form action="/notice" method="post">
+<form action="/notice/${BoardData.seq}" method="post">
+	<input type="hidden" name="_method" value="put" />
 	<input type="text" placeholder="제목을 입력하세요" name="title" class="title" value="${BoardData.title}">
 	<span>${valid_title}</span><br>
 	<input type="text" placeholder="내용을 입력하세요" name="content" class="content" value="${BoardData.content}">

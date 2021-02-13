@@ -1,16 +1,21 @@
 package com.dobongnadlecoop.controller;
 
+import java.net.http.HttpRequest;
 import java.util.Map;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dobongnadlecoop.dto.BoardDataDTO;
@@ -19,7 +24,7 @@ import com.dobongnadlecoop.utils.PageRequest;
 
 import lombok.RequiredArgsConstructor;
 
-@Controller
+@RestController
 @RequestMapping("/notice")
 @RequiredArgsConstructor
 public class NoticeBoardController {
@@ -51,7 +56,7 @@ public class NoticeBoardController {
 		// 유효성 검사 통과 실패
 		if(errors.hasErrors()) {
 			model.setViewName("/admin/noticeinsert");
-			model.addObject("BoardDataDTO", data);
+			model.addObject("BoardData", data);
 			
 			Map<String, String> validResultMap = service.validataHandling(errors);
 			
@@ -81,6 +86,38 @@ public class NoticeBoardController {
 		}else {
 			model.addObject("BoardData", boradData.get());
 		}
+		
+		return model;
+	}
+	
+	// 글 삭제
+	@DeleteMapping("/{seq}")
+	public ModelAndView deleteBoardData(@PathVariable int seq, ModelAndView model) {
+		service.deleteBoardData(seq);
+		model.setViewName("redircet:/notice");
+		return model;
+	}
+	
+	
+	// 글수정
+	@PutMapping("/{seq}")
+	public ModelAndView updateBoardData(@PathVariable int seq, @Valid @RequestBody BoardDataDTO data, Errors errors, ModelAndView model) {
+		// 유효성 검사 통과 실패
+		if(errors.hasErrors()) {
+			model.setViewName("admin/noticeupdate");
+			model.addObject("BoardData", data);
+			
+			Map<String, String> validResultMap = service.validataHandling(errors);
+			
+			for(String key : validResultMap.keySet()) {
+				model.addObject(key, validResultMap.get(key));
+			}
+			return model;
+		}
+		
+		// 검사 통과
+		model.setViewName("redirect:/notice/"+data.getSeq());
+		service.insertNoticeData(data);
 		
 		return model;
 	}

@@ -39,6 +39,7 @@ public class NoticeBoard {
 	@Column(insertable = false, updatable=false, columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP", nullable = false)
 	private Date createdate;
 		
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(insertable = false)
 	private Date updatedate;	// 마지막 글 수정 시각
 
