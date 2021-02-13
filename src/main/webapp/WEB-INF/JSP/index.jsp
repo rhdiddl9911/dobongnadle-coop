@@ -34,10 +34,19 @@
 				<th>작성일</th>
 			</tr>
 
-			<c:if test="${noticeBoardData == null}">
+			<c:if test="${noticeBoardList.size() == 0}">
 				<tr>
 					<td colspan="2" id="nulldata">아직 데이터가 없습니다.</td>
 				</tr>
+			</c:if>
+			
+			<c:if test="${noticeBoardList.size() > 0}">
+				<c:forEach var="boardData" items="${noticeBoardList}">
+					<tr onclick="location.href='notice/${boardData.seq}?page=1'" class="boarditem">
+						<td>${boardData.title}</td>
+						<td>${boardData.createdate}</td>
+					</tr>
+				</c:forEach>
 			</c:if>
 
 		</table>
