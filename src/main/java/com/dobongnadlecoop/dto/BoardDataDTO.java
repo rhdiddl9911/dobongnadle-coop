@@ -2,6 +2,11 @@ package com.dobongnadlecoop.dto;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,8 +20,16 @@ import lombok.NoArgsConstructor;
 public class BoardDataDTO {
 
 	private int seq;
+	
+	@NotEmpty(message = "제목을 입력해주세요")
+	@NotBlank(message = "제목을 입력해주세요")
+	@Length(max=200, message = "제목은 200자 이하로 입력해주세요.")
 	private String title;
+	
+	@NotEmpty(message = "내용을 입력해 주세요")
+	@NotBlank(message = "내용을 입력해 주세요")
 	private String content;
+	
 	private Date createdate;
 	private Date updatedate;
 	
