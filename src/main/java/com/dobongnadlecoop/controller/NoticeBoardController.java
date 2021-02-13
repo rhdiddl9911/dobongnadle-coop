@@ -5,10 +5,6 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.dobongnadlecoop.dto.BoardDataDTO;
 import com.dobongnadlecoop.service.NoticeBoardService;
+import com.dobongnadlecoop.utils.PageRequest;
 
 import lombok.RequiredArgsConstructor;
 
@@ -37,10 +34,12 @@ public class NoticeBoardController {
 	
 	// 리스트
 	@GetMapping("")
-	public ModelAndView Home(BoardDataDTO data) {
+	public ModelAndView Home(final PageRequest pageable) {
+		pageable.setSize(10);
+		
 		ModelAndView model = new ModelAndView("noticeboard/list");
 		
-		model.addObject("noticeBoardList", service.getTitleList());
+		model.addObject("noticeBoardList", service.getTitleList(pageable.of()));
 		
 		return model;
 	}
