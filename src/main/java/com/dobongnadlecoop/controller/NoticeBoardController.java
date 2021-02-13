@@ -1,12 +1,15 @@
 package com.dobongnadlecoop.controller;
 
 import java.util.Map;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
-import org.springframework.security.config.authentication.UserServiceBeanDefinitionParser;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,6 +49,7 @@ public class NoticeBoardController {
 	@PostMapping("")
 	public ModelAndView insertNoticeBoardData(@Valid BoardDataDTO data, Errors errors, ModelAndView model) {
 		
+		// 유효성 검사 통과 실패
 		if(errors.hasErrors()) {
 			model.setViewName("/admin/noticeinsert");
 			model.addObject("BoardDataDTO", data);
@@ -58,6 +62,7 @@ public class NoticeBoardController {
 			return model;
 		}
 		
+		// 유효성 검사 통과
 		model.setViewName("redirect:/notice");
 		service.insertNoticeData(data);
 		
@@ -69,7 +74,13 @@ public class NoticeBoardController {
 	public ModelAndView showBoardDataDetail(@PathVariable int seq) {
 		ModelAndView model = new ModelAndView("/noticeboard/detail");
 		
-		model.addObject("BoardData", service.getBoardData(seq));
+		Optional<BoardDataDTO> boradData = Optional.ofNullable(service.getBoardData(seq));
+		
+		if(boradData.isEmpty()) {
+			model.setViewName("noitem");
+		}else {
+			model.addObject("BoardData", boradData.get());
+		}
 		
 		return model;
 	}
