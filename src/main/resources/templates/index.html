@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorator="layouts/defaultlayout">
+<th:block layout:fragment="css">
+	<link rel="stylesheet" th:href="@{/css/board.css}">
+	<link rel="stylesheet" th:href="@{/css/index_home.css}">
+</th:block>
+
+<th:block layout:fragment="script">
+	<!-- slide Plugin -->
+	<script th:src="@{/js/jquery.slides.min.js}" type="text/javascript"></script>
+	<script th:src="@{/js/img_slider.js}"></script>
+</th:block>
+
+<th:block layout:fragment="content">
+<div class="imgslides">
+		<div id="slides">
+			<img src="/img/slide-1.jpg" />
+			<img src="/img/slide-2.jpg" />
+			<img src="/img/slide-3.jpg" />
+			<img src="/img/slide-4.jpg" />
+		</div>
+	</div>
+
+	<div class="boardcontent">
+	<div class="flexwrap">
+		<h3 class="title">공지사항</h3>
+			
+		<div class="board notice">
+		<table>
+			<tr>
+				<th>제목</th>
+				<th>작성일</th>
+			</tr>
+
+			<tr th:if="${noticeBoardList.size() == 0}">
+				<td colspan="2" id="nulldata">아직 데이터가 없습니다.</td>
+			</tr>
+		
+		
+			<tr th:each="boardData : ${noticeBoardList}" onclick="location.href='notice/${boardData.seq}?page=1'" class="boarditem">
+				<td th:text="${boardData.title}"></td>
+				<td th:text="${boardData.createdate}"></td>
+			</tr>
+				
+
+		</table>
+		</div>
+	</div>
+	
+	<div class="flexwrap">
+		<h3 class="title">게시판</h3>
+		<div class="board">
+		<table>
+			<tr>
+				<th>제목</th>
+				<th>작성자</th>
+				<th>작성일</th>
+			</tr>
+
+			<tr>
+				<td>아직 데이터가 없습니다.아직 데이터가 없습니다.아직 데이터가 없습니다.아직 데이터가 없습니다.아직
+					데이터가 없습니다.아직 데이터가 없습니다.아직 데이터가 없습니다.아직 데이터가 없습니다.아직 데이터가 없습니다.아직
+					데이터가 없습니다.아직 데이터가 없습니다.아직 데이터가 없습니다.</td>
+				<td>dd</td>
+				<td>dd</td>
+			</tr>
+
+			<tr>
+				<td>아직 데이터가 없습니다.아직 데이터가 없습니다.아직 데이터가 없습니다.아직 데이터가 없습니다.아직
+					데이터가 없습니다.아직 데이터가 없습니다.아직 데이터가 없습니다.아직 데이터가 없습니다.아직 데이터가 없습니다.아직
+					데이터가 없습니다.아직 데이터가 없습니다.아직 데이터가 없습니다.</td>
+				<td>dd</td>
+				<td>dd</td>
+			</tr>
+
+			<tr>
+				<td>아직 데이터가 없습니다.아직 데이터가 없습니다.아직 데이터가 없습니다.아직 데이터가 없습니다.아직
+					데이터가 없습니다.아직 데이터가 없습니다.아직 데이터가 없습니다.아직 데이터가 없습니다.아직 데이터가 없습니다.아직
+					데이터가 없습니다.아직 데이터가 없습니다.아직 데이터가 없습니다.</td>
+				<td>dd</td>
+				<td>dd</td>
+			</tr>
+
+			<tr>
+				<td>아직 데이터가 없습니다.아직 데이터가 없습니다.아직 데이터가 없습니다.아직 데이터가 없습니다.아직
+					데이터가 없습니다.아직 데이터가 없습니다.아직 데이터가 없습니다.아직 데이터가 없습니다.아직 데이터가 없습니다.아직
+					데이터가 없습니다.아직 데이터가 없습니다.아직 데이터가 없습니다.</td>
+				<td>dd</td>
+				<td>dd</td>
+			</tr>
+
+			<tr>
+				<td>아직 데이터가 없습니다.아직 데이터가 없습니다.아직 데이터가 없습니다.아직 데이터가 없습니다.아직
+					데이터가 없습니다.아직 데이터가 없습니다.아직 데이터가 없습니다.아직 데이터가 없습니다.아직 데이터가 없습니다.아직
+					데이터가 없습니다.아직 데이터가 없습니다.아직 데이터가 없습니다.</td>
+				<td>dd</td>
+				<td>dd</td>
+			</tr>
+
+		</table>
+		</div>
+	</div>
+	</div>
+</th:block>
+</html>

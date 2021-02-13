@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head th:replace="fragments/common-css :: head"></head>
+<head>
+	<title layout:title-pattern="$LAYOUT_TITLE : $CONTENT_TITLE">도봉나들</title>
+</head>
+
+<body>
+	<header th:replace="fragments/header-footer :: header"></header>
+	
+	<div class="wrap">
+		<div class="inner">
+			<th:block layout:fragment="content"></th:block>
+		</div>
+	</div>
+	
+	<footer th:replace="fragments/header-footer :: footer"></footer>
+	<th:block th:replace="fragments/common-script"></th:block>
+</body>
+
+</html>

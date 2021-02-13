@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<header th:fragment="header">
+<div class="wrap">
+	<div class="inner">
+	<div class="logo">
+	<a href="/"><img src="/img/logo.jpg">
+	<strong>도봉 나들가게 협동 조합</strong></a>
+	</div>
+	
+		<nav id="menu">
+			<ul>
+				<li><a href="/"><strong>홈</strong></a></li>
+				<li><a href="#1"><strong>소개</strong></a></li>
+				<li><a href="/notice?page=1"><strong>공지사항</strong></a></li>
+				<li><a href="#3"><strong>게시판</strong></a></li>
+				<li><a href="#4"><strong>갤러리</strong></a></li>
+				
+				
+				<li id="loginmenu">
+						<span sec:authorize="isAnonymous()">
+						<a href="/login">로그인</a>
+						</span>
+					
+					<span sec:authorize="hasRole('ADMIN')">
+					<a href="/admin">관리자</a>
+					</span>
+					
+					<span sec:authorize="isAuthenticated()">
+					<a href="">내 정보</a>
+					<a href="/logout">로그아웃</a>
+					</span>
+				</li>
+			</ul>
+		</nav>
+	</div>
+</div>
+<script src="/js/scroll_menu_event.js"></script>
+</header>
+
+
+<footer th:fragment="footer" class="wrap">
+	<div class="inner">
+		<div class="fo_content">
+			<p>오류시 문의 : rhdiddl9911@gmail.com</p>
+		</div>
+	</div>
+</footer>
