@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<%@include file="../header_menu.jsp" %>
+<%@include file="../header_menu.jspf" %>
 </head>
 <body>
 
@@ -19,5 +19,5 @@
 </form>
 
 </body>
-<%@include file="../footer.jsp" %>
+<%@include file="../footer.jspf" %>
 </html>

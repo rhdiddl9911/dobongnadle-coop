@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>공지글 상세보기</title>
-<%@include file="../header_menu.jsp" %>
+<%@include file="../header_menu.jspf" %>
 </head>
 <body>
 	<h1>글 상세보기</h1>
@@ -22,5 +22,5 @@
 	<button onclick="/notice">목록</button>
 	
 </body>
-<%@include file="../footer.jsp" %>
+<%@include file="../footer.jspf" %>
 </html>

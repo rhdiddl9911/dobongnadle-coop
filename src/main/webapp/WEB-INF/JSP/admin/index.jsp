@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<%@include file="../header_menu.jsp" %>
+<%@include file="../header_menu.jspf" %>
 <title>Insert title here</title>
 </head>
 <body>
@@ -13,5 +13,5 @@
 
 <button onclick="location.href='/admin/notice'">공지 입력하러가기</button>
 </body>
-<%@include file="../footer.jsp" %>
+<%@include file="../footer.jspf" %>
 </html>

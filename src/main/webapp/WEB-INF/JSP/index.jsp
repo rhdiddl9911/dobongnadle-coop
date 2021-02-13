@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +7,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
 <title>Insert title here</title>
-<%@include file="header_menu.jsp"%>
+<%@include file="header_menu.jspf"%>
 
 <link rel="stylesheet" href="/css/board.css">
 <link rel="stylesheet" href="/css/index_home.css">
@@ -111,5 +110,5 @@
 	<script src="/js/img_slider.js"></script>
 
 </body>
-<%@include file="footer.jsp"%>
+<%@include file="footer.jspf"%>
 </html>
