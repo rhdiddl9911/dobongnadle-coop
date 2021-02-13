@@ -3,7 +3,9 @@ package com.dobongnadlecoop.service.impl;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -43,10 +45,27 @@ public class NoticeBoardServiceImpl implements NoticeBoardService{
 	}
 	
 	@Override
-	public List<BoardTitleDTO> getTitleList() {
+	public Page<BoardTitleDTO> getTitleList() {
 		// TODO Auto-generated method stub
-		Pageable page = PageRequest.of(0, 5, Sort.Direction.DESC, "seq");
+		Pageable page = PageRequest.of(0, 10, Sort.Direction.DESC, "seq");
+		
 		return repo.findAllBy(BoardTitleDTO.class, page);
+	}
+	
+	@Override
+	public BoardDataDTO getBoardData(int seq) {
+		
+		Optional<NoticeBoard> findresult = repo.findById(seq);
+		
+		if(findresult.isEmpty()) {
+			return BoardDataDTO.builder()
+					.seq(0)
+					.title("삭제된 글입니다.")
+					.content("삭제된 글입니다.")
+					.build();
+		}else {
+			return ModelMapperUtil.convertDataType(findresult.get(), BoardDataDTO.class);
+		}
 	}
 	
 }

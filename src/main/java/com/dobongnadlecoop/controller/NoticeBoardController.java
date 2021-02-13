@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,12 +26,13 @@ public class NoticeBoardController {
 
 	private final NoticeBoardService service;
 	
+	// /notice/ 입력시 /notice로 리다이렉트
 	@GetMapping("/")
 	public String ReturnHome() {
 		return "redirect:/notice";
 	}
 	
-	
+	// 리스트
 	@GetMapping("")
 	public ModelAndView Home(BoardDataDTO data) {
 		ModelAndView model = new ModelAndView("noticeboard/list");
@@ -40,8 +42,9 @@ public class NoticeBoardController {
 		return model;
 	}
 
+	// 글입력
 	@PostMapping("")
-	public ModelAndView insertNoticeBoard(@Valid BoardDataDTO data, Errors errors, ModelAndView model) {
+	public ModelAndView insertNoticeBoardData(@Valid BoardDataDTO data, Errors errors, ModelAndView model) {
 		
 		if(errors.hasErrors()) {
 			model.setViewName("/admin/noticeinsert");
@@ -61,4 +64,13 @@ public class NoticeBoardController {
 		return model;
 	}
 	
+	// 글 보기
+	@GetMapping("/{seq}")
+	public ModelAndView showBoardDataDetail(@PathVariable int seq) {
+		ModelAndView model = new ModelAndView("/noticeboard/detail");
+		
+		model.addObject("BoardData", service.getBoardData(seq));
+		
+		return model;
+	}
 }

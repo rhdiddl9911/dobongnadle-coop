@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -33,7 +35,7 @@ public class NoticeBoard {
 	@Column(nullable = false)
 	private String content;
 	
-	//@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(insertable = false, updatable=false, columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP", nullable = false)
 	private Date createdate;
 		
