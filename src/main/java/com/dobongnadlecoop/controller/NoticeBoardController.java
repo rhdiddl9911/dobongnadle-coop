@@ -62,7 +62,7 @@ public class NoticeBoardController {
 		}
 		
 		// 유효성 검사 통과
-		model.setViewName("redirect:/notice");
+		model.setViewName("redirect:/notice?page=1");
 		service.insertNoticeData(data);
 		
 		return model;
@@ -70,8 +70,9 @@ public class NoticeBoardController {
 	
 	// 글 보기
 	@GetMapping("/{seq}")
-	public ModelAndView showBoardDataDetail(@PathVariable int seq) {
-		ModelAndView model = new ModelAndView("/noticeboard/detail");
+	public ModelAndView showBoardDataDetail(@PathVariable int seq, ModelAndView model) {
+		
+		model.setViewName("/noticeboard/detail");
 		
 		Optional<BoardDataDTO> boradData = Optional.ofNullable(service.getBoardData(seq));
 		
