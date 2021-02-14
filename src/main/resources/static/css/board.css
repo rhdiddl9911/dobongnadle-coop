@@ -57,3 +57,12 @@
 	background: #eee;
 	cursor: pointer;
 }
+
+/* 페이징 */
+.pagination{
+	list-style: none;
+}
+
+.pagination li{
+	display: inline-block;
+}

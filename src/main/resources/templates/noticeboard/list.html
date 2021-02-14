@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorator="layouts/defaultlayout">
+  
+<head><title>공지사항</title></head>
+
+<th:block layout:fragment="css">
+	<link rel="stylesheet" href="css/board.css"/>
+</th:block>
+
+<th:block layout:fragment="script">
+</th:block>
+
+<th:block layout:fragment="content">
+<div class="boardwrap">
+	<h3 class="title">공지사항</h3>
+		
+	<div class="board notice">
+	
+	<table th:with="listcontent=${noticeBoardList.content}">
+		<tr>
+			<th>제목</th>
+			<th>작성일</th>
+		</tr>
+	
+		<tr th:if="${listcontent.size() == 0 || listcontent == null}">
+			<td colspan="2" id="nulldata">아직 데이터가 없습니다.</td>
+		</tr>
+	
+		<tr th:unless="${listcontent.size() == 0 || listcontent == null}"
+			th:each="boardData : ${listcontent}" class="boarditem"
+		    th:onclick="location.href='notice/[[${boardData.seq}]]?page=[[${noticeBoardList.number+1}]]'">
+			<td th:text="${boardData.title}"></td>
+			<td th:text="${boardData.createdate}"></td>
+		</tr>
+	</table>
+	</div>
+</div>
+
+	<div style="text-align: center;">
+    <ul class="pagination"
+        th:with="start=${T(Math).floor(noticeBoardList.number/10)*10 + 1},
+                    last=(${start + 9 < noticeBoardList.totalPages ? start + 9 : noticeBoardList.totalPages})">
+        <li>
+            <a th:href="@{/notice(page=1)}" aria-label="First">
+                <span aria-hidden="true">First</span>
+            </a>
+        </li>
+
+        <li th:class="${noticeBoardList.first} ? 'disabled'">
+            <a th:href="${noticeBoardList.first} ? '#' :@{/notice(page=${noticeBoardList.number})}" aria-label="Previous">
+                <span aria-hidden="true">&lt;</span>
+            </a>
+        </li>
+
+        <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == noticeBoardList.number + 1} ? 'active'">
+            <a th:text="${page}" th:href="@{/notice(page=${page})}"></a>
+        </li>
+
+        <li th:class="${noticeBoardList.last} ? 'disabled'">
+            <a th:href="${noticeBoardList.last} ? '#' : @{/notice(page=${noticeBoardList.number + 2})}" aria-label="Next">
+                <span aria-hidden="true">&gt;</span>
+            </a>
+        </li>
+
+        <li>
+            <a th:href="@{/notice(page=${noticeBoardList.totalPages})}" aria-label="Last">
+                <span aria-hidden="true">Last</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+</th:block>
+</html>

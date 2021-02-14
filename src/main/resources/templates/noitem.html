@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorator="layouts/defaultlayout">
+  
+<th:block layout:fragment="css">
+</th:block>
+
+<th:block layout:fragment="script">
+</th:block>
+
+<th:block layout:fragment="content">
+	<h1>정보가 없습니다.</h1>
+	<button onclick="javascript:history.back()"> 돌아가기 </button>
+</th:block>
+
+</html>

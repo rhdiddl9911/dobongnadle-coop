@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" 
 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-
-<head th:replace="fragments/common-css :: head"></head>
 <head>
-	<title layout:title-pattern="$LAYOUT_TITLE : $CONTENT_TITLE">도봉나들</title>
+	<!-- meta -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+	<title layout:title-pattern="$LAYOUT_TITLE : $CONTENT_TITLE">도봉나들협동</title>
+	
+	<th:block th:replace="fragments/common-css">
+	</th:block>
 </head>
 
 <body>

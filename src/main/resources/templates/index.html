@@ -2,9 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org"
  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
   layout:decorator="layouts/defaultlayout">
+<head>
+<title>메인</title>
+</head>
+
 <th:block layout:fragment="css">
-	<link rel="stylesheet" th:href="@{/css/board.css}">
-	<link rel="stylesheet" th:href="@{/css/index_home.css}">
+<link rel="stylesheet" th:href="@{/css/board.css}">
+<link rel="stylesheet" th:href="@{/css/index_home.css}">
 </th:block>
 
 <th:block layout:fragment="script">
@@ -14,6 +18,7 @@
 </th:block>
 
 <th:block layout:fragment="content">
+
 <div class="imgslides">
 		<div id="slides">
 			<img src="/img/slide-1.jpg" />
@@ -39,7 +44,8 @@
 			</tr>
 		
 		
-			<tr th:each="boardData : ${noticeBoardList}" onclick="location.href='notice/${boardData.seq}?page=1'" class="boarditem">
+			<tr th:each="boardData : ${noticeBoardList}"
+				th:onclick="location.href='notice/[[${boardData.seq}]]?page=1'" class="boarditem">
 				<td th:text="${boardData.title}"></td>
 				<td th:text="${boardData.createdate}"></td>
 			</tr>
