@@ -24,7 +24,7 @@ public class NoticeBoardViewController {
 			ModelAndView model = new ModelAndView("noticeboard/list");
 			
 			// 글가져올
-			model.addObject("dataUrl", "/noticeborad/list");
+			model.addObject("dataUrl", "/noticeboard/list");
 			model.addObject("method", "GET");
 			
 			return model;
