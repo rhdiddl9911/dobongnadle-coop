@@ -30,7 +30,7 @@ public class NoticeBoardViewController {
 			return model;
 		}
 		
-		// 글 보기
+		// 글 수정폼
 		@GetMapping("/{seq}")
 		public ModelAndView showBoardDataDetail(@PathVariable int seq, ModelAndView model) {
 			model.setViewName("noticeboard/detail");
