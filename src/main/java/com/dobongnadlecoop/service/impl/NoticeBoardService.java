@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,14 +16,15 @@ import com.dobongnadlecoop.domain.NoticeBoard;
 import com.dobongnadlecoop.dto.BoardDataDTO;
 import com.dobongnadlecoop.dto.BoardTitleDTO;
 import com.dobongnadlecoop.repository.NoticeBoardRepository;
-import com.dobongnadlecoop.service.NoticeBoardService;
+import com.dobongnadlecoop.service.BoardService;
 import com.dobongnadlecoop.utils.ModelMapperUtil;
 
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service
-public class NoticeBoardServiceImpl implements NoticeBoardService{
+@Qualifier("notice")
+public class NoticeBoardService implements BoardService {
 
 	private final NoticeBoardRepository repo;
 	
@@ -38,7 +40,7 @@ public class NoticeBoardServiceImpl implements NoticeBoardService{
 	}
 	
 	@Override
-	public void insertNoticeData(BoardDataDTO data) {
+	public void insertBoardData(BoardDataDTO data) {
 		repo.save(ModelMapperUtil.convertDataType(data, NoticeBoard.class));
 	}
 	

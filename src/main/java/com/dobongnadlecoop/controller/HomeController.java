@@ -1,11 +1,12 @@
 package com.dobongnadlecoop.controller;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.dobongnadlecoop.service.NoticeBoardService;
+import com.dobongnadlecoop.service.BoardService;
 import com.dobongnadlecoop.utils.PageRequest;
 
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,8 @@ import lombok.RequiredArgsConstructor;
 @Controller
 public class HomeController {
 	
-	private final NoticeBoardService noticeService;
+	@Qualifier("notice")
+	private final BoardService noticeService;
 	
 	@GetMapping("/")
 	public ModelAndView HomeReturn() {
@@ -26,5 +28,4 @@ public class HomeController {
 		
 		return model;
 	}
-	
 }

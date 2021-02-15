@@ -1,14 +1,13 @@
 package com.dobongnadlecoop.controller;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.dobongnadlecoop.dto.BoardDataDTO;
-import com.dobongnadlecoop.repository.BoardRepository;
-import com.dobongnadlecoop.service.NoticeBoardService;
+import com.dobongnadlecoop.service.BoardService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,7 +16,8 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/admin")
 public class AdminController {
 	
-	private final NoticeBoardService noticeService;
+	@Qualifier("notice")
+	private final BoardService noticeService;
 	
 	@GetMapping("")
 	public ModelAndView forAdmin() {
