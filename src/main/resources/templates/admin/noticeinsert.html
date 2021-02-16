@@ -2,20 +2,63 @@
 <html xmlns:th="http://www.thymeleaf.org"
  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
   layout:decorator="layouts/defaultlayout">
-  
+<head><title>공지 입력</title>
+
+</head>
 <th:block layout:fragment="css">
 </th:block>
 
 <th:block layout:fragment="script">
+<script src="/js/jquery.serializeObject.js"></script>
+<script type="application/javascript" th:inline="javascript">
+        $(function() {
+            var csrfToken = /*[[${_csrf.token}]]*/ null;
+            var csrfHeader = /*[[${_csrf.headerName}]]*/ null;
+            $(document).ajaxSend(function (e, xhr, options) {
+                xhr.setRequestHeader(csrfHeader, csrfToken);
+            });
+        });
+</script>
+<script>
+	function insertBoardData(){
+		var senddata = $("#notice-insert").serializeObject(); 
+		$(".error").empty();
+		$.ajax({
+			url: "/noticeboard/list/new",
+			type: "Post",
+			data: JSON.stringify(senddata),
+			contentType: "application/json; charset=utf-8",
+			dataType: "json"
+		})
+		.done(function(json){
+			location.href='/notice';
+		})
+		.fail(function(json){
+			var errors = json.responseJSON;
+			// 한번에 넣는 방법은?
+			if(errors.hasOwnProperty('valid_title')){
+				$(".error.title").text(errors.valid_title);
+			}
+			if(errors.hasOwnProperty('valid_content')){
+				$(".error.content").text(errors.valid_content);
+			}
+		});
+	}
+</script>
 </th:block>
 
 <th:block layout:fragment="content">
-<form action="/notice" method="post">
-	<input type="text" placeholder="제목을 입력하세요" name="title" class="title" value="${BoardData.title}">
-	<span>${valid_title}</span><br>
-	<input type="text" placeholder="내용을 입력하세요" name="content" class="content" value="${BoardData.content}">
-	<span>${valid_content}</span><br>
-	<input type="submit" value="입력하기">
+
+<form method="post" name="notice-insert" id="notice-insert">
+
+	<div class="error title"></div><br>
+	<input type="text" placeholder="여기에 제목을 입력하세요" name="title" id="title">
+	
+	<hr>
+	
+	<div class="error content"></div><br>
+	<textarea placeholder="여기에 내용을 입력하세요" rows="30" cols="155" name="content" id="content"></textarea>
+	<input type="button" onclick="javascript:insertBoardData()" value="입력하기">
 </form>
 </th:block>
 </html>

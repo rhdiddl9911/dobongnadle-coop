@@ -10,6 +10,9 @@
 	<link rel="stylesheet" href="css/board.css"/>
 </th:block>
 
+<th:block layout:fragment="pre-script">
+</th:block>
+
 <th:block layout:fragment="content" id="content">
 
 <div class="boardwrap">
@@ -45,7 +48,6 @@
             });
         });
     </script>
-    
 	<script type="text/javascript">
 	// function list
 	// 보드 리스트
@@ -124,37 +126,54 @@
 	};
 
 	function updateBoardData(seq, pagenum){
-		var senddata = {"seq":seq, "title":$("#title").val(), "content":$("#content").val()}
-		
+		var senddata = {"seq":seq, "title":$("#title").val(), "content":$("#content").val()};
+		$(".error").empty();
 		$.ajax({
 			url: "/noticeboard/list/"+seq,
 			type: "PUT",
 			data: JSON.stringify(senddata),
 			contentType: "application/json; charset=utf-8",
-			dataType: "json",
-			success 	: function(data) {
-				console.log(data);
-				$(".board.notice").empty();
-				loadBoardData(seq, pagenum);
-	        },
-	        error		: function(error) {
-	        	console.log(error.responseText);
-	        }
+			dataType: "json"
+		})
+		.done(function(json){
+			$(".board.notice").empty();
+			loadBoardData(seq, pagenum);
+		})
+		.fail(function(json){
+			$(".error").empty();
+			var errors = json.responseJSON;
+			if(errors.hasOwnProperty('valid_title')){
+				$(".error.title").text(errors.valid_title);
+			}
+			if(errors.hasOwnProperty('valid_content')){
+				$(".error.content").text(errors.valid_content);
+			}
 		});
 	};
 	
 	function makeUpdateForm(seq, pagenum){
 		var title = $("<input></input>").attr("type", "text").attr("id", "title").attr("value",$("#title").text());
 		var content = $("<textarea></textarea>").attr("rows", "30").attr("cols", "150").attr("id", "content").text($("#content").text());
-
+		
 		$("#content").replaceWith(content);
 		$("#title").replaceWith(title);
 		$("#update-btn").attr("onclick","javascript:updateBoardData("+seq+","+pagenum+")");
+		
+
+		var e_title = $("<div></div>").attr("class", "error title");
+		$(".board.notice").append(e_title);
+		var e_content = $("<div></div>").attr("class", "error content");
+		$(".board.notice").append(e_content);
 	};
 </script>
 
 <script>
 loadBoardList('1');
+ 
+ var seq = '[[${seq}]]'*1;
+ if(seq){
+	loadBoardData(seq, 1);
+ }
 </script>
 
 </th:block>
