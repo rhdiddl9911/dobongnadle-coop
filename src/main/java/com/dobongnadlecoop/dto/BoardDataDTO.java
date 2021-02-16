@@ -6,6 +6,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,7 +23,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class BoardDataDTO {
-
+	
 	private int seq;
 	
 	@NotEmpty(message = "제목을 입력해주세요")
@@ -32,7 +35,12 @@ public class BoardDataDTO {
 	@NotBlank(message = "내용을 입력해 주세요")
 	private String content;
 	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone="Asia/Seoul")
 	private Date createdate;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone="Asia/Seoul")
 	private Date updatedate;
 	
 }
