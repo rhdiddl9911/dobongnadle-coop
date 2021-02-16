@@ -1,6 +1,5 @@
 package com.dobongnadlecoop.controller;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -89,7 +88,6 @@ public class NoticeBoardDataController {
 		
 		// 검사 통과
 		try {
-			data.setUpdatedate(new Date());
 			service.insertBoardData(data);
 			return new ResponseEntity<>(validResultMap,HttpStatus.OK);
 		}catch (Exception e) {

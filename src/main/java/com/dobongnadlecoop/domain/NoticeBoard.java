@@ -11,6 +11,9 @@ import javax.persistence.Lob;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -36,11 +39,12 @@ public class NoticeBoard {
 	private String content;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(insertable = false, updatable=false, columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP", nullable = false)
+	@Column(updatable = false)
+	@CreationTimestamp
 	private Date createdate;
 		
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(insertable = false)
+	@UpdateTimestamp
 	private Date updatedate;	// 마지막 글 수정 시각
 
 	@Builder
