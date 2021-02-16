@@ -47,7 +47,7 @@
 			<tr th:each="boardData : ${noticeBoardList}"
 				th:onclick="location.href='notice?seq=[[${boardData.seq}]]'" class="boarditem">
 				<td th:text="${boardData.title}"></td>
-				<td th:text="${boardData.createdate}"></td>
+				<td th:text="${#dates.format(boardData.createdate, 'yyyy-MM-dd')}"></td>
 			</tr>
 				
 
