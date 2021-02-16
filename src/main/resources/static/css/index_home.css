@@ -10,6 +10,8 @@
 
 #slides img{
 	border-radius: 1em;
+	height: 100%;
+	width: 100%;
 }
 
 /** 페이지번호(현재위치) 버튼 영역 */

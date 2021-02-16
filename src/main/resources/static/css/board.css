@@ -9,9 +9,12 @@
 	margin-bottom: 2em;
 }
 
+.board{
+	height: 36.55em;
+}
+
 .board table{
 	width: 100%;
-	height: 100%;
 	border-collapse: collapse;
 	table-layout: fixed;
 }
@@ -19,6 +22,7 @@
 .board table td, .board table th{
 	border-bottom: 1px solid #eee;
 	text-align: center;
+	word-break:break-all;
 	padding: 0.4em 0 0.4em 1em;
 }
 
@@ -61,8 +65,12 @@
 /* 페이징 */
 .pagination{
 	list-style: none;
+	padding: 1em;
+	margin: 0 auto;
+	text-align: center;
 }
 
 .pagination li{
 	display: inline-block;
+	margin-right: 1em;
 }
