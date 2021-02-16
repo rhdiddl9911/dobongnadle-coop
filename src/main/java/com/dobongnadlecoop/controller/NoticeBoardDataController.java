@@ -1,6 +1,7 @@
 package com.dobongnadlecoop.controller;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -80,11 +81,9 @@ public class NoticeBoardDataController {
 	public @ResponseBody ResponseEntity<Map<String, String>> updateBoardData(@PathVariable int seq, @Valid @RequestBody BoardDataDTO data, Errors errors) {
 		// 유효성 검사 통과 실패
 
-		Map<String, String> validResultMap = service.validataHandling(errors);
+		Map<String, String> validResultMap = new HashMap<String, String>();
 		if(errors.hasErrors()) {
-			
-			//Map<String, String> validResultMap = service.validataHandling(errors);
-			
+			validResultMap = service.validataHandling(errors);
 			return new ResponseEntity<>(validResultMap,HttpStatus.BAD_REQUEST);
 		}
 		
@@ -100,24 +99,18 @@ public class NoticeBoardDataController {
 	
 	// 글입력
 		@PreAuthorize("hasRole('ADMIN')")
-		@PostMapping("/list")
-		public @ResponseBody ResponseEntity<Map<String, String>> insertNoticeBoardData(@Valid BoardDataDTO data, Errors errors, ModelAndView model) {
-			
+		@PostMapping("/list/new")
+		public @ResponseBody ResponseEntity<Map<String, String>> insertNoticeBoardData(@Valid @RequestBody BoardDataDTO data, Errors errors) {
+
+			Map<String, String> validResultMap = new HashMap<String, String>();
 			// 유효성 검사 통과 실패
 			if(errors.hasErrors()) {
-				model.addObject("BoardData", data);
+				validResultMap = service.validataHandling(errors);
+				return new ResponseEntity<Map<String,String>>(validResultMap, HttpStatus.BAD_REQUEST);
 				
-				Map<String, String> validResultMap = service.validataHandling(errors);
-				
-				for(String key : validResultMap.keySet()) {
-					model.addObject(key, validResultMap.get(key));
-				}
-				return new ResponseEntity<>(validResultMap, HttpStatus.BAD_REQUEST);
 			}
-			
 			// 유효성 검사 통과
 			service.insertBoardData(data);
-			
-			return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<>(validResultMap, HttpStatus.OK);
 		}
 }

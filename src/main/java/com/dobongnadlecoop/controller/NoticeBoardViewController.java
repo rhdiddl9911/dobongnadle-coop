@@ -1,9 +1,13 @@
 package com.dobongnadlecoop.controller;
 
+
+import java.util.Optional;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dobongnadlecoop.utils.PageRequest;
@@ -20,26 +24,21 @@ public class NoticeBoardViewController {
 		
 		// 리스트
 		@GetMapping("")
-		public ModelAndView Home(final PageRequest pageable) {
+		public ModelAndView noticeHome(final PageRequest pageable, @RequestParam Optional<Integer> seq) {
 			ModelAndView model = new ModelAndView("noticeboard/list");
 			
-			// 글가져올
-			model.addObject("dataUrl", "/noticeboard/list");
-			model.addObject("method", "GET");
+			if(seq.isPresent()) {
+				model.addObject("seq", seq.get());
+			}
 			
 			return model;
 		}
 		
-		// 글 수정폼
+		// 공지클릭
 		@GetMapping("/{seq}")
-		public ModelAndView showBoardDataDetail(@PathVariable int seq, ModelAndView model) {
-			model.setViewName("noticeboard/detail");
+		public String noticeMainClick(@PathVariable int seq) {
 			
-			// 글 가져올
-			model.addObject("dataUrl", "/noticeboard/list/"+seq);
-			model.addObject("method","GET");
-			
-			return model;
+			return "redirect:/notice";
 		}
 		
 }
