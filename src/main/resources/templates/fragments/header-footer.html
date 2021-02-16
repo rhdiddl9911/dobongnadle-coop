@@ -13,21 +13,23 @@
 			<ul>
 				<li><a href="/"><strong>홈</strong></a></li>
 				<li><a href="#1"><strong>소개</strong></a></li>
-				<li><a href="/notice?page=1"><strong>공지사항</strong></a></li>
+				<li><a href="/notice"><strong>공지사항</strong></a></li>
 				<li><a href="#3"><strong>게시판</strong></a></li>
 				<li><a href="#4"><strong>갤러리</strong></a></li>
-				
+				<li><a href="/member"><strong>멤버채팅(0)</strong></a></li>
 				
 				<li id="loginmenu">
 						<span sec:authorize="isAnonymous()">
 						<a href="/login">로그인</a>
 						</span>
 					
+					
+					
+					<span sec:authorize="isAuthenticated()">
+					<label sec:authentication="principal.username"></label> 님
 					<span sec:authorize="hasRole('ADMIN')">
 					<a href="/admin">관리자</a>
 					</span>
-					
-					<span sec:authorize="isAuthenticated()">
 					<a href="">내 정보</a>
 					<a href="/logout">로그아웃</a>
 					</span>
@@ -36,7 +38,6 @@
 		</nav>
 	</div>
 </div>
-<script src="/js/scroll_menu_event.js"></script>
 </header>
 
 
