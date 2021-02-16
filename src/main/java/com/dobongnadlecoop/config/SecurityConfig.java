@@ -10,8 +10,8 @@ import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
-import com.dobongnadlecoop.domain.MemberRole;
 import com.dobongnadlecoop.userService.CustomUserDetailsService;
 
 @EnableWebSecurity
@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		http.authorizeRequests().antMatchers("/member/**").authenticated();
 		http.authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN");
 		
-		http.csrf().disable();
+		http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 		http.formLogin();
 		
 		http.userDetailsService(customUserDetailsService);
