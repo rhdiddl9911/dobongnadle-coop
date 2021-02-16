@@ -12,9 +12,8 @@ function pagination(pagedata){
 		
 		// 1페이지로 되돌아가기
 		var first = $("<a></a>").text("처음").attr("href", "javascript:loadBoardList('"+1+"')");
-		if(pagedata.first){first.removeAttr("href").attr("class", "disabled");}
+		if(pagedata.first){first.removeAttr("href").attr("hidden", "hidden");}
 		$("<li>").append(first).appendTo(pagelist);
-		//pagelist.append();
 
 		// 전 세트로 돌아가기 (-10)
 		var pre = $("<a></a>").text("<").attr("href", "javascript:loadBoardList('"+(start-10)+"')");
@@ -35,9 +34,10 @@ function pagination(pagedata){
 		if(last==pagedata.totalPages){next.removeAttr("href").attr("hidden", "hidden");}
 		pagelist.append($("<li></li>").append(next));
 		
+		// 마지막 페이지
 		var lastPage = $("<a></a>").text("마지막").attr("href", "javascript:loadBoardList('"+pagedata.totalPages+"')");
 		if(pagedata.last){
-			lastPage.removeAttr("href").attr("class", "disabled");
+			lastPage.removeAttr("href").attr("hidden", "hidden");
 		}
 		pagelist.append($("<li></li>").append(lastPage));
 		
