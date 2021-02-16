@@ -1,5 +1,6 @@
 package com.dobongnadlecoop.controller;
 
+import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
 
@@ -45,7 +46,7 @@ public class NoticeBoardDataController {
 			Page<BoardTitleDTO> listItem = service.getTitleList(pageable.of());
 			return new ResponseEntity<>(listItem, HttpStatus.OK);
 		}catch (Exception e) {
-			return new ResponseEntity<Page<BoardTitleDTO>>(HttpStatus.ACCEPTED);
+			return new ResponseEntity<Page<BoardTitleDTO>>(HttpStatus.NOT_FOUND);
 		}
 		
 	}
@@ -55,38 +56,12 @@ public class NoticeBoardDataController {
 		Optional<BoardDataDTO> boradData = Optional.ofNullable(service.getBoardData(seq));
 		
 		if(boradData.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.ACCEPTED);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}else {
 			return new ResponseEntity<>(boradData.get(), HttpStatus.OK);
 		}
 	}
 
-	// 글입력
-	@PreAuthorize("hasRole('ADMIN')")
-	@PostMapping("/list")
-	public ModelAndView insertNoticeBoardData(@Valid BoardDataDTO data, Errors errors, ModelAndView model) {
-		
-		// 유효성 검사 통과 실패
-		if(errors.hasErrors()) {
-			model.setViewName("/admin/noticeinsert");
-			model.addObject("BoardData", data);
-			
-			Map<String, String> validResultMap = service.validataHandling(errors);
-			
-			for(String key : validResultMap.keySet()) {
-				model.addObject(key, validResultMap.get(key));
-			}
-			return model;
-		}
-		
-		// 유효성 검사 통과
-		model.setViewName("redirect:/notice?page=1");
-		service.insertBoardData(data);
-		
-		return model;
-	}
-	
-	
 	// 글 삭제
 	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/list/{seq}")
@@ -95,32 +70,54 @@ public class NoticeBoardDataController {
 			service.deleteBoardData(seq);
 			return new ResponseEntity<HttpStatus>(HttpStatus.RESET_CONTENT);
 		}catch (Exception e) {
-			return new ResponseEntity<HttpStatus>(HttpStatus.ACCEPTED);
+			return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);
 		}
 	}
-	
 	
 	// 글수정
 	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/list/{seq}")
-	public ModelAndView updateBoardData(@PathVariable int seq, @Valid @RequestBody BoardDataDTO data, Errors errors, ModelAndView model) {
+	public @ResponseBody ResponseEntity<Map<String, String>> updateBoardData(@PathVariable int seq, @Valid @RequestBody BoardDataDTO data, Errors errors) {
 		// 유효성 검사 통과 실패
+
+		Map<String, String> validResultMap = service.validataHandling(errors);
 		if(errors.hasErrors()) {
-			model.setViewName("admin/noticeupdate");
-			model.addObject("BoardData", data);
 			
-			Map<String, String> validResultMap = service.validataHandling(errors);
+			//Map<String, String> validResultMap = service.validataHandling(errors);
 			
-			for(String key : validResultMap.keySet()) {
-				model.addObject(key, validResultMap.get(key));
-			}
-			return model;
+			return new ResponseEntity<>(validResultMap,HttpStatus.BAD_REQUEST);
 		}
 		
 		// 검사 통과
-		model.setViewName("redirect:/notice/"+data.getSeq());
-		service.insertBoardData(data);
-		
-		return model;
+		try {
+			data.setUpdatedate(new Date());
+			service.insertBoardData(data);
+			return new ResponseEntity<>(validResultMap,HttpStatus.OK);
+		}catch (Exception e) {
+			return new ResponseEntity<>(validResultMap,HttpStatus.NOT_FOUND);
+		}
 	}
+	
+	// 글입력
+		@PreAuthorize("hasRole('ADMIN')")
+		@PostMapping("/list")
+		public @ResponseBody ResponseEntity<Map<String, String>> insertNoticeBoardData(@Valid BoardDataDTO data, Errors errors, ModelAndView model) {
+			
+			// 유효성 검사 통과 실패
+			if(errors.hasErrors()) {
+				model.addObject("BoardData", data);
+				
+				Map<String, String> validResultMap = service.validataHandling(errors);
+				
+				for(String key : validResultMap.keySet()) {
+					model.addObject(key, validResultMap.get(key));
+				}
+				return new ResponseEntity<>(validResultMap, HttpStatus.BAD_REQUEST);
+			}
+			
+			// 유효성 검사 통과
+			service.insertBoardData(data);
+			
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
 }

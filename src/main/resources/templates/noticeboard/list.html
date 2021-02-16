@@ -3,74 +3,160 @@
  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
   layout:decorator="layouts/defaultlayout">
   
-<head><title>공지사항</title></head>
+<head><title>공지사항</title>
+</head>
 
 <th:block layout:fragment="css">
 	<link rel="stylesheet" href="css/board.css"/>
 </th:block>
 
-<th:block layout:fragment="script">
-</th:block>
+<th:block layout:fragment="content" id="content">
 
-<th:block layout:fragment="content">
 <div class="boardwrap">
 	<h3 class="title">공지사항</h3>
 		
 	<div class="board notice">
 	
-	<table th:with="listcontent=${noticeBoardList.content}">
-		<tr>
-			<th>제목</th>
-			<th>작성일</th>
-		</tr>
-	
-		<tr th:if="${listcontent.size() == 0 || listcontent == null}">
-			<td colspan="2" id="nulldata">아직 데이터가 없습니다.</td>
-		</tr>
-	
-		<tr th:unless="${listcontent.size() == 0 || listcontent == null}"
-			th:each="boardData : ${listcontent}" class="boarditem"
-		    th:onclick="location.href='notice/[[${boardData.seq}]]?page=[[${noticeBoardList.number+1}]]'">
-			<td th:text="${boardData.title}"></td>
-			<td th:text="${boardData.createdate}"></td>
-		</tr>
-	</table>
 	</div>
+	<div class="pagination">
+	
+	</div>
+	
+	<th:block sec:authorize="hasRole('ADMIN')">
+		<button hidden="hidden" id="update-btn">수정</button>
+		<button hidden="hidden" id="del-btn">삭제</button>
+	</th:block>
+	
+	<button hidden="hidden" id="list-btn">목록</button>
+	
 </div>
 
-	<div style="text-align: center;">
-    <ul class="pagination"
-        th:with="start=${T(Math).floor(noticeBoardList.number/10)*10 + 1},
-                    last=(${start + 9 < noticeBoardList.totalPages ? start + 9 : noticeBoardList.totalPages})">
-        <li>
-            <a th:href="@{/notice(page=1)}" aria-label="First">
-                <span aria-hidden="true">First</span>
-            </a>
-        </li>
-
-        <li th:class="${noticeBoardList.first} ? 'disabled'">
-            <a th:href="${noticeBoardList.first} ? '#' :@{/notice(page=${noticeBoardList.number})}" aria-label="Previous">
-                <span aria-hidden="true">&lt;</span>
-            </a>
-        </li>
-
-        <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == noticeBoardList.number + 1} ? 'active'">
-            <a th:text="${page}" th:href="@{/notice(page=${page})}"></a>
-        </li>
-
-        <li th:class="${noticeBoardList.last} ? 'disabled'">
-            <a th:href="${noticeBoardList.last} ? '#' : @{/notice(page=${noticeBoardList.number + 2})}" aria-label="Next">
-                <span aria-hidden="true">&gt;</span>
-            </a>
-        </li>
-
-        <li>
-            <a th:href="@{/notice(page=${noticeBoardList.totalPages})}" aria-label="Last">
-                <span aria-hidden="true">Last</span>
-            </a>
-        </li>
-    </ul>
-</div>
 
 </th:block>
+
+<th:block layout:fragment="script">
+	<script src="/js/pagination.js"></script>
+	<script type="application/javascript" th:inline="javascript">
+        $(function() {
+            var csrfToken = /*[[${_csrf.token}]]*/ null;
+            var csrfHeader = /*[[${_csrf.headerName}]]*/ null;
+            $(document).ajaxSend(function (e, xhr, options) {
+                xhr.setRequestHeader(csrfHeader, csrfToken);
+            });
+        });
+    </script>
+    
+	<script type="text/javascript">
+	// function list
+	// 보드 리스트
+	function loadBoardList(pagenum){
+		$("button").attr("hidden", "hidden");
+		$(".pagination").removeAttr("hidden");
+		$.ajax({
+			url: "/noticeboard/list?page="+pagenum,
+			type: 'GET',
+			contentType: "application/json; charset=utf-8",
+			processData: false,
+			dataType: "json"
+			}).done(function(json){
+				var table = $("<table></table>");
+				table.append("<th>제목</th>")
+				table.append("<th>작성시간</th>")
+				// 보드 리스트 데이터 뿌리기
+				$.each(json.content, function(index, item){
+					var tr = $("<tr></tr>");
+					tr.attr("class", "boarditem");
+					tr.attr("onclick", "javascript:loadBoardData("+item.seq+","+(json.number+1)+" )");
+					
+					tr.append($("<td></td>").text(item.title));
+					tr.append($("<td></td>").text(item.createdate));
+					
+					tr.appendTo(table);
+				});
+				
+				var pagelist = pagination(json);
+				
+				$(".board.notice").html(table);
+				$(".pagination").html(pagelist);
+		});	
+	};
+	
+	//보드 데이터(글 상세)
+	function loadBoardData(seq, pagenum){
+		$.ajax({
+			url: "/noticeboard/list/"+seq+"?page="+pagenum,
+			type: 'GET',
+			contentType: "application/json; charset=utf-8",
+			processData: false,
+			dataType: "json"
+			}).done(function(json){
+				var div = $("<div></div>");
+				var form = $("<form></form>");
+				// 보드데이터 뿌리기
+				var title = $("<h3></h3>").text(json.title).attr("id", "title");
+				var content = $("<text></text>").text(json.content).attr("id","content");
+				
+				$("#title").replaceWith(title);
+				$("#content").replaceWith(content);
+				
+				div.append(title).append("<hr>").append(content);
+			
+				$(".board.notice").html(div);
+				$(".pagination").attr("hidden", "hidden");
+				
+				// 버튼 설정
+				$("button").removeAttr("hidden");
+				$("#list-btn").attr("onclick","javascript:loadBoardList("+pagenum+")");
+				$("#update-btn").attr("onclick", "javascript:makeUpdateForm("+seq+", "+pagenum+")");
+				
+				$("#del-btn").attr("onclick","javascript:delBoardData("+seq+", "+pagenum+")");
+		});
+	};
+
+	function delBoardData(seq, pagenum){
+		$.ajax({
+			url: "/noticeboard/list/"+seq,
+			type: "DELETE",
+			contentType:'application/json'
+		}).done(function(json){
+			loadBoardList(pagenum);
+		});
+	};
+
+	function updateBoardData(seq, pagenum){
+		var senddata = {"seq":seq, "title":$("#title").val(), "content":$("#content").val()}
+		
+		$.ajax({
+			url: "/noticeboard/list/"+seq,
+			type: "PUT",
+			data: JSON.stringify(senddata),
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success 	: function(data) {
+				console.log(data);
+				$(".board.notice").empty();
+				loadBoardData(seq, pagenum);
+	        },
+	        error		: function(error) {
+	        	console.log(error.responseText);
+	        }
+		});
+	};
+	
+	function makeUpdateForm(seq, pagenum){
+		var title = $("<input></input>").attr("type", "text").attr("id", "title").attr("value",$("#title").text());
+		var content = $("<textarea></textarea>").attr("rows", "30").attr("cols", "150").attr("id", "content").text($("#content").text());
+
+		$("#content").replaceWith(content);
+		$("#title").replaceWith(title);
+		$("#update-btn").attr("onclick","javascript:updateBoardData("+seq+","+pagenum+")");
+	};
+</script>
+
+<script>
+loadBoardList('1');
+</script>
+
+</th:block>
+
 </html>
