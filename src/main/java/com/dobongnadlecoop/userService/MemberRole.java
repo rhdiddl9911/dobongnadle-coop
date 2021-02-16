@@ -1,4 +1,4 @@
-package com.dobongnadlecoop.domain;
+package com.dobongnadlecoop.userService;
 
 public enum MemberRole {
 	ROLE_ADMIN
