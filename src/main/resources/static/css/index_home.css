@@ -64,7 +64,10 @@
 	display: inline-flex;
 	padding: 1em;
 }
-
+.board{
+	height: 19.4em;
+	background: #fff;
+}
 .flexwrap:first-child{
 	margin-right: 2em;
 }
