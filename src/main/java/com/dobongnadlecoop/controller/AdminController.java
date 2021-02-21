@@ -3,11 +3,11 @@ package com.dobongnadlecoop.controller;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dobongnadlecoop.service.BoardService;
+import com.dobongnadlecoop.service.impl.CustomUserDetailsService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,6 +18,7 @@ public class AdminController {
 	
 	@Qualifier("notice")
 	private final BoardService noticeService;
+	private final CustomUserDetailsService memberService;
 	
 	@GetMapping("")
 	public ModelAndView forAdmin() {
@@ -36,11 +37,10 @@ public class AdminController {
 		return model;
 	}
 	
-	@GetMapping("/notice/{seq}")
-	public ModelAndView updateNotice(@PathVariable int seq, ModelAndView model) {
-		model.addObject("BoardData", noticeService.getBoardData(seq));
-		model.setViewName("admin/noticeupdate");
+	@GetMapping("/member")
+	public ModelAndView memberList() {
+		ModelAndView model = new ModelAndView("admin/memberList");
+		model.addObject("memberList", memberService.getMemberList());
 		return model;
 	}
-	
 }
