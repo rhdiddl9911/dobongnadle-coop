@@ -23,15 +23,15 @@
 						<a href="/login">로그인</a>
 						</span>
 					
-					
-					
 					<span sec:authorize="isAuthenticated()">
 					<label sec:authentication="principal.username"></label> 님
 					<span sec:authorize="hasRole('ADMIN')">
 					<a href="/admin">관리자</a>
 					</span>
 					<a href="">내 정보</a>
-					<a href="/logout">로그아웃</a>
+					<form th:method="post" th:action="@{/logout}">
+						<input type="submit" value="로그아웃">
+					</form>
 					</span>
 				</li>
 			</ul>
