@@ -12,7 +12,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
-import com.dobongnadlecoop.userService.CustomUserDetailsService;
+import com.dobongnadlecoop.service.impl.CustomUserDetailsService;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -31,7 +31,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		http.authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN");
 		
 		http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
-		http.formLogin();
+		http.formLogin().loginPage("/login").defaultSuccessUrl("/");
+		http.logout().logoutUrl("/logout").invalidateHttpSession(true).logoutSuccessUrl("/");
 		
 		http.userDetailsService(customUserDetailsService);
 	}
