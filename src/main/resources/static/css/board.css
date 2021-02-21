@@ -10,7 +10,7 @@
 }
 
 .board{
-	height: 36.55em;
+	height: 23.4em;
 }
 
 .board table{
@@ -50,6 +50,21 @@
 .board.notice th:first-child, .board.notice table td:first-child {
 	width: 80%;
 }
+
+.board.member th:first-child, .board.member table td:first-child {
+	width: 5%;
+}
+
+/* 세부 열 너비조절 */
+
+.board.member th:last-child, .board.member table td:last-child {
+	width: 70%;
+	
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
 
 /* null 처리 */
 .board #nulldata{

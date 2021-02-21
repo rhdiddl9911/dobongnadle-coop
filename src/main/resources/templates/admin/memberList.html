@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorator="layouts/defaultlayout">
+ 
+<head><title>회원관리</title></head>
+
+<th:block layout:fragment="css">
+<link rel="stylesheet" th:href="@{/css/board.css}">
+</th:block>
+
+<th:block layout:fragment="script">
+<script th:src="@{/js/check_all.js}"></script>
+</th:block>
+
+<th:block layout:fragment="content">
+	<h3>수락을 기다리는 사람들</h3>
+	<div class="board member">
+	<table>
+		<tr>
+			<th><input type="checkbox" name="chk" class="check" id="chk_all" ></th>
+			<th>이름</th>
+			<th>연락처</th>
+			<th>소개글</th>
+		</tr>
+		<tr th:each="memberData : ${memberList}" th:if="${memberData.isNotallow}">
+			<td><input type="checkbox" name="chk" class="check"></td>
+			<td th:text="${memberData.name}"></td>
+			<td th:text="${memberData.phone}"></td>
+			<td th:text="${memberData.memo}"></td>
+		</tr>
+	</table>
+	</div>
+</th:block>
+</html>
