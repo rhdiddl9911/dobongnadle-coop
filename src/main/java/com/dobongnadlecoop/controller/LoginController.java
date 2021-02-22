@@ -32,15 +32,20 @@ public class LoginController {
 	}
 	
 	@PostMapping("/signup")
-	public ModelAndView singupDo(Member member, @RequestParam("passwordcheck")String passwordcheck) {
-		ModelAndView model = new ModelAndView("signup_ok");
+	public String singupDo(Member member, @RequestParam("passwordcheck")String passwordcheck) {
 		
 		if(!member.passcheck(passwordcheck)) {
-			model.setViewName("signup");
-			return model;
+			return "redirect:/login/signup";
 		}
 		
 		service.singup(member);
+		
+		return "redirect:/login/signup/ok";
+	}
+	
+	@GetMapping("/signup/ok")
+	public ModelAndView singupOk() {
+		ModelAndView model = new ModelAndView("signup_ok");
 		
 		return model;
 	}
